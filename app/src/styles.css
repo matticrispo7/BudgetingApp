@@ -1,0 +1,234 @@
+body {
+  background-color: #191919;
+}
+
+h1,h2,h3,h4,
+h5,
+h6 {
+  /*color: #5670a3;*/
+  color: #D3D3D3
+}
+
+.filter-title { 
+  width: 100%;
+  text-align: center;
+}
+
+.btn-join  {
+  width: 100%;
+}
+
+/* NAVBAR */
+
+.navbar {
+  /*background-color: #3d4c69;*/
+  /* background-color: #515151; */
+  --bs-navbar-active-color: #d3d3d3;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.navbar-brand, .nav-link {
+  color:  #D3D3D3;
+  --bs-nav-link-hover-color: #D3D3D3;
+  --bs-navbar-brand-hover-color: #D3D3D3;
+}
+
+.nav-link.active {
+  font-weight: bold;
+}
+
+.nav-link.disabled {
+  color: #D3D3D3;
+}
+
+.navbar-toggler {
+  background-color: #D3D3D3;
+}
+
+.link-btn {
+  background: None;
+  border: none;
+  color: #D3D3D3;
+  text-decoration: underline;
+  --bs-btn-active-bg: none;
+}
+
+.link-btn:hover {
+  background: None;
+  border: none;
+  color: #89632A;
+  text-decoration: underline;
+}
+
+
+
+.btn-submit {
+  background-color: #2383E2;
+  border: none;
+}
+
+
+.form-control {
+  background-color: #191919;
+  color: #D3D3D3;
+  border-width: 1px;
+  
+}
+
+/* .form-control:active, .form-control:hover {
+  background-color: transparent !important; 
+} */
+
+.form-input {
+  color: #D3D3D3;
+}
+
+.form-input::placeholder, .form-control::placeholder {
+  color: #D3D3D3;
+}
+
+
+/* TABLE */
+.table {
+  --bs-table-bg:  #191919;
+}
+
+.table th {
+  color: #7A7A7A;
+  /*text-align: center;*/
+  font-weight: bold;
+  font-size: large;
+}
+
+.table tr, .table td {
+  text-align: center;
+  color: #D3D3D3
+}
+
+/* */
+
+.modal-header, .modal-body, .modal-footer {
+  background-color: #252525;
+}
+
+.modal-header {
+  font-weight: bold;
+  color: #D3D3D3;
+}
+
+/* dropdown */
+.dropdown-toggle  {
+  background-color: #89632A;
+  border: none;
+  --bs-btn-hover-bg: #89632A;
+  --bs-btn-active-bg: #6b5028
+}
+
+
+.btn.show {
+  background-color: #89632A;
+}
+
+.dropdown-menu {
+  background-color: #252525;
+}
+
+.dropdown-item {
+  background-color: none;
+  color: #D3D3D3;
+}
+
+/* pagination */
+.page-item {
+  --bs-pagination-bg: transparent;
+  --bs-pagination-color: #D3D3D3;
+  --bs-pagination-hover-bg: #89632A;
+  --bs-pagination-hover-color: white;
+}
+
+
+
+.page-item.active {
+  --bs-pagination-active-bg: #7A7A7A;
+  --bs-pagination-active-color: #D3D3D3;
+  --bs-pagination-active-border-color: #DEE2E6
+}
+
+
+/* Accordion */
+
+.accordion {
+  --bs-accordion-bg: transparent;
+  --bs-accordion-btn-focus-border: none;
+  --bs-accordion-active-bg: #7A7A7A;
+  /*--bs-accordion-active-color: black; */
+}
+
+.accordion-header-category, .accordion-header-total {
+  color: #D3D3D3
+}
+
+.accordion-header-category {
+  font-weight: bold;
+}
+
+.accordion-header-total {
+  text-align: right;
+  white-space: nowrap; /* ensure the tex is in 1 line*/
+}
+
+.accordion-body-category, .accordion-body-total {
+  color: #D3D3D3;
+}
+
+.accordion-body-category {
+  font-weight: bold;
+}
+
+.accordion-body-total {
+  text-align: right;
+  white-space: nowrap; /* ensure the tex is in 1 line*/
+}
+
+
+
+
+.join-content {
+  height: 75vh;
+  align-items: center;
+}
+
+
+/* DatePicker */
+.react-datepicker__header, .react-datepicker__month  {
+  background: #191919 !important;
+  font-weight: bold !important;
+  
+}
+
+
+
+.react-datepicker__day, .react-datepicker__day-names, 
+.react-datepicker__current-month, .react-datepicker__day-name {
+  color: #D3D3D3 !important;
+}
+
+.react-datepicker__day--outside-month {
+  color: #7A7A7A !important;
+}
+
+.react-datepicker__month {
+  margin: 0px !important;
+}
+
+.year-expense {
+  color: #bd2732;
+}
+
+.year-income {
+  color: #82ca9d;
+}
