@@ -1,0 +1,61 @@
+name: Build Docker images and deploy to server
+
+on:
+  push:
+    branches:
+      - "release_dev"
+
+env:
+  DOCKER_IMAGE_NAME_API: ${{ secrets.DOCKER_IMAGE_NAME_API}}
+  DOCKER_IMAGE_NAME_APP: ${{ secrets.DOCKER_IMAGE_NAME_APP}}
+  DOCKER_IMAGE_TAG: latest
+
+jobs:
+  check_eslint_and_test:
+    uses: ./.github/workflows/eslint_test.yml
+    secrets: inherit
+
+  build_push_images:
+    needs: check_eslint_and_test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker images
+        run: |
+          cd api
+          docker build -t ${{ secrets.DOCKER_REGISTRY_USER }}/$DOCKER_IMAGE_NAME_API:$DOCKER_IMAGE_TAG .
+          cd ../app
+          docker build -f Dockerfile.prod -t ${{ secrets.DOCKER_REGISTRY_USER }}/$DOCKER_IMAGE_NAME_APP:$DOCKER_IMAGE_TAG .
+
+      - name: Publish Docker image
+        run: |
+          docker login -u ${{ secrets.DOCKER_REGISTRY_USER }} -p ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+          docker push ${{ secrets.DOCKER_REGISTRY_USER }}/$DOCKER_IMAGE_NAME_API:$DOCKER_IMAGE_TAG
+          docker push ${{ secrets.DOCKER_REGISTRY_USER }}/$DOCKER_IMAGE_NAME_APP:$DOCKER_IMAGE_TAG
+          docker logout
+
+  deploy:
+    needs: build_push_images
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install sshpass
+        run: sudo apt-get install sshpass
+
+      - name: SSH into remote server and deploy Docker container
+        run: |
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }} "
+          echo ✅ SSH connection successful. Pulling Docker images
+          cd ${{ secrets.WORKING_DIRECTORY }}
+          echo ✅ Changed to working directory
+          docker pull ${{ secrets.DOCKER_REGISTRY_USER }}/$DOCKER_IMAGE_NAME_API:$DOCKER_IMAGE_TAG
+          docker pull ${{ secrets.DOCKER_REGISTRY_USER }}/$DOCKER_IMAGE_NAME_APP:$DOCKER_IMAGE_TAG
+          echo ✅ Stopping containers
+          docker compose down
+          echo ✅ Restart docker-compose
+          docker compose up -d
+          exit"

@@ -1,0 +1,67 @@
+name: Run ESLint and test
+
+on:
+  push:
+    branches:
+      - "*"
+
+  pull_request:
+    types: [opened, reopened]
+    branches:
+      - "**"
+
+  workflow_call:
+
+jobs:
+  app_eslint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - name: Install dependencies
+        run: |
+          cd app
+          npm install
+
+      - name: Run linter
+        run: |
+          cd app
+          npm run lint
+
+  api_eslint_test:
+    runs-on: ubuntu-latest
+    env:
+      ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+      REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }}
+      ACCESS_TOKEN_EXPIRE: ${{ secrets.ACCESS_TOKEN_EXPIRE }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - name: Install dependencies
+        run: |
+          cd api
+          npm install
+
+      - name: Run linter
+        run: |
+          cd api 
+          npm run lint
+
+      - name: Run test
+        run: |
+          cd api 
+          npm run test:ci
